@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import routesProductos from '../routes/productos';
+import routesUsuarios from '../routes/usuarios'
 import db from '../db/connection';
 
 class Server{
@@ -29,6 +30,7 @@ class Server{
         })
 
         this.app.use('/productos', routesProductos)
+        this.app.use('/usuarios', routesUsuarios)
     }
 
     midlewares() {

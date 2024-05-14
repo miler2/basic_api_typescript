@@ -62,7 +62,7 @@ export const editProduct = async (req: Request, res: Response) => {
     try {
         if (producto){
             await producto.update(body);
-            res.json({
+            res.status(200).json({
                 msg: `El producto fue actualizado con éxito`
             })
         } else {

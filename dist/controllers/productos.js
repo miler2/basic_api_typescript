@@ -74,7 +74,7 @@ const editProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         if (producto) {
             yield producto.update(body);
-            res.json({
+            res.status(200).json({
                 msg: `El producto fue actualizado con éxito`
             });
         }

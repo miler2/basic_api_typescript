@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const productos_1 = __importDefault(require("../routes/productos"));
+const usuarios_1 = __importDefault(require("../routes/usuarios"));
 const connection_1 = __importDefault(require("../db/connection"));
 class Server {
     constructor() {
@@ -36,6 +37,7 @@ class Server {
             res.send('API Working');
         });
         this.app.use('/productos', productos_1.default);
+        this.app.use('/usuarios', usuarios_1.default);
     }
     midlewares() {
         // Parseamos el body
