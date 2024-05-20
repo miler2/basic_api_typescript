@@ -11,7 +11,7 @@ class Server{
     constructor(){
         // console.log(process.env.PORT); // Con esto accedemos al archivo .env (en este caso, estamos accediendo a la variable PORT y la estamos mandando por consola)
         this.app = express();
-        this.port = process.env.PORT || '3001+';
+        this.port = process.env.PORT || '3001';
         this.listen();
         this.midlewares();
         this.routes();
