@@ -1,5 +1,5 @@
 # Basic API with node.js
-Aquí estoy demostrando cómo usar una API desde cero, con una base de datos propia y otras dependencias importantes.
+Esta api de pruebas está basada en typescript, sirve solo como referencia para crear nuevos proyectos.
 
 
 ## Dependencies
