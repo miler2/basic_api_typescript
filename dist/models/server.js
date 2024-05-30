@@ -21,7 +21,7 @@ class Server {
     constructor() {
         // console.log(process.env.PORT); // Con esto accedemos al archivo .env (en este caso, estamos accediendo a la variable PORT y la estamos mandando por consola)
         this.app = (0, express_1.default)();
-        this.port = process.env.PORT || '3001+';
+        this.port = process.env.PORT || '3001';
         this.listen();
         this.midlewares();
         this.routes();
@@ -37,7 +37,7 @@ class Server {
             res.send('API Working');
         });
         this.app.use('/productos', productos_1.default);
-        this.app.use('/usuarios', usuarios_1.default);
+        this.app.use('/login', usuarios_1.default);
     }
     midlewares() {
         // Parseamos el body

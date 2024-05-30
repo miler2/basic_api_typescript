@@ -12,31 +12,75 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addUser = exports.getUser = void 0;
+exports.verifyToken = exports.token = void 0;
 const usuarios_1 = __importDefault(require("../models/usuarios"));
-const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { nombre } = req.params;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const miClave = 'miclave'; // Esta es la clave que usamos para encriptar y desencriptar
+// Crea un token a partir de un login correcto
+const token = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, contrasena } = req.body;
     try {
-        const usuario = yield usuarios_1.default.findByPk(nombre);
-        res.json(usuario);
+        // Busca un usuario cuyo email coincida con el email introducido
+        const user = yield usuarios_1.default.findOne({ where: { email: email } });
+        if (user && user.contrasena === contrasena) {
+            const token = jsonwebtoken_1.default.sign({ email: user.email }, miClave, { expiresIn: '1h' }); // Genera un token
+            res.json({ token: token });
+        }
+        else {
+            res.status(401).json({ message: 'Email o contraseña incorrectos' });
+        }
+    }
+    catch (_a) {
+        console.error(Error);
+        res.status(500).json({ message: 'Error del servidor' });
+    }
+});
+exports.token = token;
+// Verifica el token dado por la página web
+const verifyToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { token } = req.body;
+    try {
+        // Verificar y decodificar el token
+        const decoded = jsonwebtoken_1.default.verify(token, miClave);
+        const userId = decoded.id;
+        // Buscar al usuario en la base de datos
+        const user = yield usuarios_1.default.findByPk(userId);
+        if (user) {
+            res.json(user);
+        }
+        else {
+            res.status(404).json({ message: 'Usuario no encontrado' });
+        }
     }
     catch (error) {
         console.error(error);
+        res.status(400).json({ message: 'Token inválido o expirado' });
+    } // Este try catch funciona?
+});
+exports.verifyToken = verifyToken;
+// Todo esto era usado para hacer las primeras pruebas
+/* export const getUser = async (req: Request, res: Response) => {
+    const { nombre } = req.params;
+
+    try {
+        const usuario = await User.findByPk(nombre);
+        res.json(usuario);
+    } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Error fetching user' });
     }
-});
-exports.getUser = getUser;
-const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}
+
+export const addUser = async (req: Request, res: Response) => {
     const { body } = req;
+
     try {
-        yield usuarios_1.default.create(body);
+        await User.create(body);
         res.json({
             msg: `El usuario fué agregado con éxito`
         });
-    }
-    catch (error) {
+    } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error fetching user' });
     }
-});
-exports.addUser = addUser;
+} */ 

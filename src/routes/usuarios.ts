@@ -1,9 +1,13 @@
 import { Router } from "express";
-import { addUser, getUser } from "../controllers/usuarios";
+import { token, verifyToken } from "../controllers/usuarios";
 
 const router = Router();
 
-router.get('/:nombre', getUser);
-router.post('/add', addUser);
+
+router.post('/', token);
+router.post('/verifyToken', verifyToken);
+
+// router.get('/:nombre', getUser);
+// router.post('/add', addUser);
 
 export default router;

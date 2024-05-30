@@ -30,7 +30,7 @@ class Server{
         })
 
         this.app.use('/productos', routesProductos)
-        this.app.use('/usuarios', routesUsuarios)
+        this.app.use('/login', routesUsuarios)
     }
 
     midlewares() {
