@@ -35,10 +35,10 @@ export const verifyToken = async (req: Request, res: Response) => {
   
     try {
       // Verificar y decodificar el token
-      const decoded = jwt.verify(token, miClave);
-      const userId = (decoded as any).id;
+      const decoded = jwt.verify(token, miClave);   // Verifica y guarda en la variable "decoded" el token
+      const userId = (decoded as any).email;    // (decoded as any) define que la variable sea de tipo any, y de esa variable extrae ".email" para luego usarlo en el comando de abajo
   
-      // Buscar al usuario en la base de datos
+      // Buscar al usuario en la base de datos usando el email
       const user = await User.findByPk(userId);
   
       if (user) {
@@ -47,36 +47,7 @@ export const verifyToken = async (req: Request, res: Response) => {
         res.status(404).json({ message: 'Usuario no encontrado' });
       }
     } catch (error) {
-      console.error(error);
+    //   console.error(error);
       res.status(400).json({ message: 'Token inválido o expirado' });
     }   // Este try catch funciona?
 }
-
-
-
-// Todo esto era usado para hacer las primeras pruebas
-/* export const getUser = async (req: Request, res: Response) => {
-    const { nombre } = req.params;
-
-    try {
-        const usuario = await User.findByPk(nombre);
-        res.json(usuario);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error fetching user' });
-    }
-}
-
-export const addUser = async (req: Request, res: Response) => {
-    const { body } = req;
-
-    try {
-        await User.create(body);
-        res.json({
-            msg: `El usuario fué agregado con éxito`
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error fetching user' });
-    }
-} */
