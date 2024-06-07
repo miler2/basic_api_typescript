@@ -6,5 +6,5 @@ const router = (0, express_1.Router)();
 router.post('/', usuarios_1.token);
 router.post('/verifyToken', usuarios_1.verifyToken);
 // router.get('/:nombre', getUser);
-// router.post('/add', addUser);
+router.post('/add', usuarios_1.addUser);
 exports.default = router;

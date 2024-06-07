@@ -42,12 +42,26 @@ export const verifyToken = async (req: Request, res: Response) => {
       const user = await User.findByPk(userId);
   
       if (user) {
-        res.json(user);
+        res.json(true);
       } else {
         res.status(404).json({ message: 'Usuario no encontrado' });
       }
     } catch (error) {
     //   console.error(error);
-      res.status(400).json({ message: 'Token inválido o expirado' });
-    }   // Este try catch funciona?
+      res.json({ message: 'Token inválido o expirado' });  // Si hay error, muestra esto por consola del navegador. || Comentar para uso en producción.
+    }
+}
+
+export const addUser = async (req: Request, res: Response) => {
+  const { body } = req;
+
+  try {
+      await User.create(body);
+      res.json({
+          msg: `El usuario fué agregado con éxito`
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error fetching user' });
+  }
 }

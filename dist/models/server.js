@@ -38,6 +38,7 @@ class Server {
         });
         this.app.use('/productos', productos_1.default);
         this.app.use('/login', usuarios_1.default);
+        this.app.use('/usuarios', usuarios_1.default);
     }
     midlewares() {
         // Parseamos el body

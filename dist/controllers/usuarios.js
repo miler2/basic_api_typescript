@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyToken = exports.token = void 0;
+exports.addUser = exports.verifyToken = exports.token = void 0;
 const usuarios_1 = __importDefault(require("../models/usuarios"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const miClave = 'miclave'; // Esta es la clave que usamos para encriptar y desencriptar
@@ -46,7 +46,7 @@ const verifyToken = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         // Buscar al usuario en la base de datos usando el email
         const user = yield usuarios_1.default.findByPk(userId);
         if (user) {
-            res.json(user);
+            res.json(true);
         }
         else {
             res.status(404).json({ message: 'Usuario no encontrado' });
@@ -54,7 +54,21 @@ const verifyToken = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (error) {
         //   console.error(error);
-        res.status(400).json({ message: 'Token inválido o expirado' });
-    } // Este try catch funciona?
+        res.json({ message: 'Token inválido o expirado' }); // Si hay error, muestra esto por consola del navegador. || Comentar para uso en producción.
+    }
 });
 exports.verifyToken = verifyToken;
+const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { body } = req;
+    try {
+        yield usuarios_1.default.create(body);
+        res.json({
+            msg: `El usuario fué agregado con éxito`
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching user' });
+    }
+});
+exports.addUser = addUser;
