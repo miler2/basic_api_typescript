@@ -19,7 +19,7 @@ Esta api de pruebas está basada en typescript, sirve solo como referencia para 
 
     Can be installed with the command:
     ```
-    npm install --save-dev nodemon
+    npm install -g nodemon
     ```
 
     Can be executed with:

@@ -6,4 +6,4 @@ const sequelize = new Sequelize('productos_tutorial', 'miler', '', {
     // logging: false // Esto nos permite deshabilitar la visualización de las consultas a la base de datos desde la consola
 });
 
-export default sequelize;
+export default sequelize; 
